@@ -31,6 +31,7 @@ namespace AU_Whiteboard_Editor
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             picWhiteboard = new PictureBox();
             tvwShips = new TreeView();
             btnExpandAll = new Button();
@@ -153,6 +154,7 @@ namespace AU_Whiteboard_Editor
             Controls.Add(tvwShips);
             Controls.Add(picWhiteboard);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "frmMain";
             Text = "Approximately Up: Whiteboard Editor";
