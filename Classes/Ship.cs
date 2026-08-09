@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace AU_Whiteboard_Editor.Classes
@@ -24,7 +21,7 @@ namespace AU_Whiteboard_Editor.Classes
             _name = string.Empty; _folder = string.Empty; _version = string.Empty; _guid = string.Empty; _bitmaps = new List<WhiteboardBitmap>();
         }
 
-        public static Ship Load(string filePath)
+        public static Ship Load(string filePath, WbColor[] palette)
         {
             Ship ship = new Ship();
 
@@ -33,7 +30,7 @@ namespace AU_Whiteboard_Editor.Classes
             if (json != null)
                 ship = JsonConvert.DeserializeObject<Ship>(json);
             if (string.IsNullOrEmpty(ship._folder))
-                ship._folder = "root";
+                ship._folder = "Root";
 
             // meta data
             ship._guid = Path.GetFileName(filePath).ToLower();
@@ -43,15 +40,15 @@ namespace AU_Whiteboard_Editor.Classes
                 return null;
 
             int boardCount = 0;
-            Bitmap bitmap = Whiteboard.ReadBitmap(exPath, 0, out boardCount);
-            WhiteboardBitmap whiteboardBitmap = new WhiteboardBitmap(exPath, bitmap);
+            Bitmap bitmap = Whiteboard.ReadWhiteboardImage(exPath, 0, out boardCount, palette);
+            WhiteboardBitmap whiteboardBitmap = new WhiteboardBitmap(exPath, 0, bitmap);
             ship._bitmaps.Add(whiteboardBitmap);
             if (boardCount > 1)
             {
                 for (int i = 1; i < boardCount; i++)
                 {
-                    bitmap = Whiteboard.ReadBitmap(exPath, i, out boardCount);
-                    whiteboardBitmap = new WhiteboardBitmap(exPath, bitmap);
+                    bitmap = Whiteboard.ReadWhiteboardImage(exPath, i, out boardCount, palette);
+                    whiteboardBitmap = new WhiteboardBitmap(exPath, i, bitmap);
                     ship._bitmaps.Add(whiteboardBitmap);
                 }
             }
