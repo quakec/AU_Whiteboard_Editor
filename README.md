@@ -1,4 +1,8 @@
-Some of the Colour Spaces are heavily weighted towards certain colours, this is why I've included the option to filter your palette colours.
+A whiteboard editor for Approximately Up
+
+This tool allows you to open any image and format it for your whiteboard, it includes dithering and crop tools with the ability to filter the palette colours.
+
+Some of the colour ppaces are heavily weighted towards certain colours, this is why I've included the option to filter the palette.
 
 Some dither techniques don't work too well with noisy images, but remember we're working with a very limited palette. There is no single setting that will work for all images, the best thing to do is try each colour space with each of the dithering techniques and play with the brightness to achieve the best results.
 
