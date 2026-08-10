@@ -1,7 +1,9 @@
 using AU_Whiteboard_Editor.Classes;
+using AU_Whiteboard_Editor.Helpers;
 using Newtonsoft.Json.Bson;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Reflection;
 
 namespace AU_Whiteboard_Editor
 {
@@ -30,7 +32,8 @@ namespace AU_Whiteboard_Editor
         private void frmMain_Load(object sender, EventArgs e)
         {
             ofdLoadBitmap.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            lblVersion.Text = "Version: " + FileVersionInfo.GetVersionInfo(Environment.ProcessPath!).FileVersion + " by QuakeC";
+            string? copyright = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
+            lblVersion.Text = "Version: " + FileVersionInfo.GetVersionInfo(Environment.ProcessPath!).FileVersion + ", " + copyright;
             AddBackFillEntries();
             AddResizeModeEntries();
             AddDitherTypeEntries();
@@ -56,10 +59,10 @@ namespace AU_Whiteboard_Editor
         private void AddResizeModeEntries()
         {
             cboResizeMode.FormattingEnabled = true;
-            cboResizeMode.DataSource = Enum.GetValues<Whiteboard.ResizeMode>();
+            cboResizeMode.DataSource = Enum.GetValues<ImageProcessing.ResizeMode>();
             cboResizeMode.Format += (sender, e) =>
             {
-                if (e.ListItem is Whiteboard.ResizeMode value)
+                if (e.ListItem is ImageProcessing.ResizeMode value)
                     e.Value = value.GetDescription();
             };
             cboResizeMode.SelectedIndex = 0;
@@ -69,10 +72,10 @@ namespace AU_Whiteboard_Editor
         private void AddDitherTypeEntries()
         {
             cboDitherType.FormattingEnabled = true;
-            cboDitherType.DataSource = Enum.GetValues<Whiteboard.DitherType>();
+            cboDitherType.DataSource = Enum.GetValues<ImageProcessing.DitherType>();
             cboDitherType.Format += (sender, e) =>
             {
-                if (e.ListItem is Whiteboard.DitherType value)
+                if (e.ListItem is ImageProcessing.DitherType value)
                     e.Value = value.GetDescription();
             };
             cboDitherType.SelectedIndex = 0;
@@ -82,10 +85,10 @@ namespace AU_Whiteboard_Editor
         private void AddColorSpaceEntries()
         {
             cboColorSpace.FormattingEnabled = true;
-            cboColorSpace.DataSource = Enum.GetValues<Whiteboard.ColorSpace>();
+            cboColorSpace.DataSource = Enum.GetValues<ImageProcessing.ColorSpace>();
             cboColorSpace.Format += (sender, e) =>
             {
-                if (e.ListItem is Whiteboard.ColorSpace value)
+                if (e.ListItem is ImageProcessing.ColorSpace value)
                     e.Value = value.GetDescription();
             };
             cboColorSpace.SelectedIndex = 0;
@@ -197,27 +200,27 @@ namespace AU_Whiteboard_Editor
                 bitmap.RotateFlip(RotateFlipType.Rotate270FlipNone);
 
             // apply back fill, resizemode
-            Whiteboard.ResizeMode resizeMode = (Whiteboard.ResizeMode)cboResizeMode.SelectedItem;
-            bitmap = Whiteboard.ResizeBitmap(bitmap, selectedBackFill.Color, resizeMode, trkCropPosition.Value);
+            ImageProcessing.ResizeMode resizeMode = (ImageProcessing.ResizeMode)cboResizeMode.SelectedItem;
+            bitmap = ImageProcessing.ResizeBitmap(bitmap, selectedBackFill.Color, resizeMode, trkCropPosition.Value);
 
             // brightness
             if (trkBrightness.Value != 25)
-                bitmap = Whiteboard.AdjustBrightness(bitmap, trkBrightness.Value - 25);
+                bitmap = ImageProcessing.AdjustBrightness(bitmap, trkBrightness.Value - 25);
 
             originalImage?.Dispose();
-            originalImage = Whiteboard.CropBitmap(bitmap, selectedBackFill.Color, resizeMode, trkCropPosition.Value);
+            originalImage = ImageProcessing.CropBitmap(bitmap, selectedBackFill.Color, resizeMode, trkCropPosition.Value);
             ShowOriginalImage(originalImage);
 
             // apply dither
-            Whiteboard.DitherType ditherType = (Whiteboard.DitherType)cboDitherType.SelectedItem;
-            Whiteboard.ColorSpace colorSpace = (Whiteboard.ColorSpace)cboColorSpace.SelectedItem;
-            if (ditherType == Whiteboard.DitherType.None)
+            ImageProcessing.DitherType ditherType = (ImageProcessing.DitherType)cboDitherType.SelectedItem;
+            ImageProcessing.ColorSpace colorSpace = (ImageProcessing.ColorSpace)cboColorSpace.SelectedItem;
+            if (ditherType == ImageProcessing.DitherType.None)
             {
-                bitmap = Whiteboard.ApplyPalette(bitmap, palette, colorSpace);
+                bitmap = ImageProcessing.ApplyPalette(bitmap, palette, colorSpace);
             }
             else
             {
-                bitmap = Whiteboard.ApplyPaletteDithered(bitmap, palette, ditherType, colorSpace);
+                bitmap = ImageProcessing.ApplyPaletteDithered(bitmap, palette, ditherType, colorSpace);
             }
 
             modifiedImage?.Dispose();
@@ -406,7 +409,7 @@ namespace AU_Whiteboard_Editor
         }
         private void trkBrightness_Scroll(object sender, EventArgs e)
         {
-            toolTip.SetToolTip(trkBrightness, trkBrightness.Value.ToString());
+            toolTip.SetToolTip(trkBrightness, (trkBrightness.Value - 25).ToString());
             OptionChanged();
         }
 
@@ -418,8 +421,8 @@ namespace AU_Whiteboard_Editor
             if (!control.Enabled)
                 return;
 
-            lblCropPosition.Enabled = ((Whiteboard.ResizeMode)cboResizeMode.SelectedItem) == Whiteboard.ResizeMode.Crop;
-            trkCropPosition.Enabled = ((Whiteboard.ResizeMode)cboResizeMode.SelectedItem) == Whiteboard.ResizeMode.Crop;
+            lblCropPosition.Enabled = ((ImageProcessing.ResizeMode)cboResizeMode.SelectedItem) == ImageProcessing.ResizeMode.Crop;
+            trkCropPosition.Enabled = ((ImageProcessing.ResizeMode)cboResizeMode.SelectedItem) == ImageProcessing.ResizeMode.Crop;
             OptionChanged();
         }
         private void trkCropPosition_Scroll(object sender, EventArgs e)

@@ -102,7 +102,7 @@ namespace AU_Whiteboard_Editor
             tvwShips.Location = new Point(8, 71);
             tvwShips.Name = "tvwShips";
             tvwShips.Size = new Size(271, 762);
-            tvwShips.TabIndex = 15;
+            tvwShips.TabIndex = 20;
             tvwShips.NodeMouseClick += tvwShips_NodeMouseClick;
             // 
             // btnExpandAll
@@ -137,7 +137,7 @@ namespace AU_Whiteboard_Editor
             btnOverwrite.Location = new Point(399, 200);
             btnOverwrite.Name = "btnOverwrite";
             btnOverwrite.Size = new Size(78, 60);
-            btnOverwrite.TabIndex = 12;
+            btnOverwrite.TabIndex = 21;
             btnOverwrite.Text = "Overwrite";
             btnOverwrite.TextImageRelation = TextImageRelation.ImageAboveText;
             btnOverwrite.UseVisualStyleBackColor = true;
@@ -207,7 +207,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteBlack.Location = new Point(402, 36);
             chkPaletteBlack.Name = "chkPaletteBlack";
             chkPaletteBlack.Size = new Size(24, 24);
-            chkPaletteBlack.TabIndex = 4;
+            chkPaletteBlack.TabIndex = 10;
             chkPaletteBlack.Text = "a";
             chkPaletteBlack.TextAlign = ContentAlignment.TopCenter;
             chkPaletteBlack.UseCompatibleTextRendering = true;
@@ -227,7 +227,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteRed.Location = new Point(425, 36);
             chkPaletteRed.Name = "chkPaletteRed";
             chkPaletteRed.Size = new Size(24, 24);
-            chkPaletteRed.TabIndex = 5;
+            chkPaletteRed.TabIndex = 11;
             chkPaletteRed.Text = "a";
             chkPaletteRed.TextAlign = ContentAlignment.TopCenter;
             chkPaletteRed.UseCompatibleTextRendering = true;
@@ -247,7 +247,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteGreen.Location = new Point(448, 36);
             chkPaletteGreen.Name = "chkPaletteGreen";
             chkPaletteGreen.Size = new Size(24, 24);
-            chkPaletteGreen.TabIndex = 6;
+            chkPaletteGreen.TabIndex = 12;
             chkPaletteGreen.Text = "a";
             chkPaletteGreen.TextAlign = ContentAlignment.TopCenter;
             chkPaletteGreen.UseCompatibleTextRendering = true;
@@ -267,7 +267,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteBlue.Location = new Point(471, 36);
             chkPaletteBlue.Name = "chkPaletteBlue";
             chkPaletteBlue.Size = new Size(24, 24);
-            chkPaletteBlue.TabIndex = 7;
+            chkPaletteBlue.TabIndex = 13;
             chkPaletteBlue.Text = "a";
             chkPaletteBlue.TextAlign = ContentAlignment.TopCenter;
             chkPaletteBlue.UseCompatibleTextRendering = true;
@@ -287,7 +287,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteYellow.Location = new Point(494, 36);
             chkPaletteYellow.Name = "chkPaletteYellow";
             chkPaletteYellow.Size = new Size(24, 24);
-            chkPaletteYellow.TabIndex = 8;
+            chkPaletteYellow.TabIndex = 14;
             chkPaletteYellow.Text = "a";
             chkPaletteYellow.TextAlign = ContentAlignment.TopCenter;
             chkPaletteYellow.UseCompatibleTextRendering = true;
@@ -307,7 +307,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteMagenta.Location = new Point(517, 36);
             chkPaletteMagenta.Name = "chkPaletteMagenta";
             chkPaletteMagenta.Size = new Size(24, 24);
-            chkPaletteMagenta.TabIndex = 9;
+            chkPaletteMagenta.TabIndex = 15;
             chkPaletteMagenta.Text = "a";
             chkPaletteMagenta.TextAlign = ContentAlignment.TopCenter;
             chkPaletteMagenta.UseCompatibleTextRendering = true;
@@ -327,7 +327,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteCyan.Location = new Point(540, 36);
             chkPaletteCyan.Name = "chkPaletteCyan";
             chkPaletteCyan.Size = new Size(24, 24);
-            chkPaletteCyan.TabIndex = 10;
+            chkPaletteCyan.TabIndex = 16;
             chkPaletteCyan.Text = "a";
             chkPaletteCyan.TextAlign = ContentAlignment.TopCenter;
             chkPaletteCyan.UseCompatibleTextRendering = true;
@@ -353,7 +353,7 @@ namespace AU_Whiteboard_Editor
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Search...";
             txtSearch.Size = new Size(249, 27);
-            txtSearch.TabIndex = 13;
+            txtSearch.TabIndex = 8;
             txtSearch.KeyPress += txtSearch_KeyPress;
             // 
             // btnClearSearch
@@ -383,12 +383,13 @@ namespace AU_Whiteboard_Editor
             // 
             cboDitherType.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             cboDitherType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboDitherType.DropDownWidth = 215;
             cboDitherType.Enabled = false;
             cboDitherType.FormattingEnabled = true;
             cboDitherType.Location = new Point(767, 36);
             cboDitherType.Name = "cboDitherType";
-            cboDitherType.Size = new Size(148, 23);
-            cboDitherType.TabIndex = 22;
+            cboDitherType.Size = new Size(123, 23);
+            cboDitherType.TabIndex = 18;
             cboDitherType.SelectedIndexChanged += cboDitherType_SelectedIndexChanged;
             // 
             // lblDitherType
@@ -420,7 +421,7 @@ namespace AU_Whiteboard_Editor
             cboResizeMode.Location = new Point(617, 8);
             cboResizeMode.Name = "cboResizeMode";
             cboResizeMode.Size = new Size(135, 23);
-            cboResizeMode.TabIndex = 24;
+            cboResizeMode.TabIndex = 5;
             cboResizeMode.SelectedIndexChanged += cboResizeMode_SelectedIndexChanged;
             // 
             // trkCropPosition
@@ -431,7 +432,7 @@ namespace AU_Whiteboard_Editor
             trkCropPosition.Maximum = 100;
             trkCropPosition.Name = "trkCropPosition";
             trkCropPosition.Size = new Size(124, 24);
-            trkCropPosition.TabIndex = 26;
+            trkCropPosition.TabIndex = 6;
             trkCropPosition.TickStyle = TickStyle.None;
             trkCropPosition.Scroll += trkCropPosition_Scroll;
             // 
@@ -448,7 +449,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteWhite.Location = new Point(379, 36);
             chkPaletteWhite.Name = "chkPaletteWhite";
             chkPaletteWhite.Size = new Size(24, 24);
-            chkPaletteWhite.TabIndex = 27;
+            chkPaletteWhite.TabIndex = 9;
             chkPaletteWhite.Text = "a";
             chkPaletteWhite.TextAlign = ContentAlignment.TopCenter;
             chkPaletteWhite.UseCompatibleTextRendering = true;
@@ -473,7 +474,7 @@ namespace AU_Whiteboard_Editor
             chkRotate.Location = new Point(976, 11);
             chkRotate.Name = "chkRotate";
             chkRotate.Size = new Size(80, 19);
-            chkRotate.TabIndex = 29;
+            chkRotate.TabIndex = 7;
             chkRotate.Text = "Rotate 90°";
             chkRotate.UseVisualStyleBackColor = true;
             chkRotate.CheckedChanged += chkRotate_CheckedChanged;
@@ -481,11 +482,11 @@ namespace AU_Whiteboard_Editor
             // trkBrightness
             // 
             trkBrightness.AutoSize = false;
-            trkBrightness.Location = new Point(637, 34);
+            trkBrightness.Location = new Point(636, 34);
             trkBrightness.Maximum = 50;
             trkBrightness.Name = "trkBrightness";
-            trkBrightness.Size = new Size(64, 24);
-            trkBrightness.TabIndex = 30;
+            trkBrightness.Size = new Size(69, 30);
+            trkBrightness.TabIndex = 17;
             trkBrightness.TickFrequency = 25;
             trkBrightness.Value = 25;
             trkBrightness.Scroll += trkBrightness_Scroll;
@@ -494,12 +495,13 @@ namespace AU_Whiteboard_Editor
             // 
             cboColorSpace.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             cboColorSpace.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboColorSpace.DropDownWidth = 140;
             cboColorSpace.Enabled = false;
             cboColorSpace.FormattingEnabled = true;
-            cboColorSpace.Location = new Point(996, 36);
+            cboColorSpace.Location = new Point(976, 36);
             cboColorSpace.Name = "cboColorSpace";
-            cboColorSpace.Size = new Size(63, 23);
-            cboColorSpace.TabIndex = 31;
+            cboColorSpace.Size = new Size(83, 23);
+            cboColorSpace.TabIndex = 19;
             cboColorSpace.SelectedIndexChanged += cboColorSpace_SelectedIndexChanged;
             // 
             // lblColorSpace
@@ -507,7 +509,7 @@ namespace AU_Whiteboard_Editor
             lblColorSpace.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblColorSpace.AutoSize = true;
             lblColorSpace.Enabled = false;
-            lblColorSpace.Location = new Point(921, 39);
+            lblColorSpace.Location = new Point(897, 39);
             lblColorSpace.Name = "lblColorSpace";
             lblColorSpace.Size = new Size(73, 15);
             lblColorSpace.TabIndex = 32;
@@ -517,7 +519,7 @@ namespace AU_Whiteboard_Editor
             // 
             lblBrightness.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblBrightness.AutoSize = true;
-            lblBrightness.Location = new Point(575, 39);
+            lblBrightness.Location = new Point(571, 39);
             lblBrightness.Name = "lblBrightness";
             lblBrightness.Size = new Size(65, 15);
             lblBrightness.TabIndex = 33;
@@ -554,7 +556,7 @@ namespace AU_Whiteboard_Editor
             cboBackfill.Location = new Point(432, 8);
             cboBackfill.Name = "cboBackfill";
             cboBackfill.Size = new Size(98, 24);
-            cboBackfill.TabIndex = 36;
+            cboBackfill.TabIndex = 4;
             cboBackfill.SelectedIndexChanged += cboBackfill_SelectedIndexChanged;
             // 
             // frmMain
@@ -562,14 +564,14 @@ namespace AU_Whiteboard_Editor
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1068, 857);
+            Controls.Add(trkBrightness);
+            Controls.Add(lblBrightness);
             Controls.Add(cboBackfill);
             Controls.Add(picOriginal);
             Controls.Add(lblCropPosition);
             Controls.Add(trkCropPosition);
-            Controls.Add(lblBrightness);
             Controls.Add(cboColorSpace);
             Controls.Add(lblColorSpace);
-            Controls.Add(trkBrightness);
             Controls.Add(chkRotate);
             Controls.Add(picWhiteboard);
             Controls.Add(chkPaletteWhite);
