@@ -4,7 +4,7 @@ This tool allows you to open any image and format it for your whiteboard, it inc
 
 Some of the colour spaces are heavily weighted towards certain colours, this is why I've included the option to filter the palette.
 
-Some dither techniques don't work too well with noisy images, but remember we're working with a very limited palette. There is no single setting that will work for all images, the best thing to do is try each colour space with each of the dithering techniques and play with the brightness to achieve the best results.
+Dithering doesn't work too well with noisy images, but remember we're working with a very limited palette. There is no single setting that will work for all images, the best thing to do is try each colour space with each of the dithering techniques and play with the brightness to achieve the best results.
 
 Actual whiteboard image resolutions are 384 x 256, that's a 2:3 ratio for processing images outside of the application.
 
