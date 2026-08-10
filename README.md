@@ -2,6 +2,8 @@ A whiteboard editor for Approximately Up
 
 This tool allows you to open any image, format it and overwrite your whiteboards, it includes automatic ship enumeration, dithering and crop tools with the ability to filter the palette colours.
 
+How to use: Either order, pick your ships's whiteboard from the treeview/click Open Image. At this point you'll be able to click the overwrite button, there are various adjustment tools at your disposal, play around to see what's look best.
+
 Some of the colour spaces are heavily weighted towards certain colours, this is why I've included the option to filter colours. In fact removing green has helped in a lot of cases with blues and even greens.
 
 Dithering doesn't work too well with noisy images, but remember we're working with just 8 colours. There is no single setting that will work for all images, the best thing to do is try each colour space with each of the dithering techniques and play with the brightness to achieve the best results.
