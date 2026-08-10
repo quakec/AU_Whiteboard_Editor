@@ -1,8 +1,19 @@
-Some of the Colour Spaces are heavily weighted towards certain colours, this is why I've included the option to choose your palette colours.
+A whiteboard editor for Approximately Up
 
-Some dither techniques don't work too well with noisy images, but remember we're working with a very limited palette.
+This tool allows you to open any image, format it and overwrite your whiteboards, it includes automatic ship enumeration, dithering and crop tools with the ability to filter the palette colours.
+
+Some of the colour spaces are heavily weighted towards certain colours, this is why I've included the option to filter colours.
+
+Dithering doesn't work too well with noisy images, but remember we're working with just 8 colours. There is no single setting that will work for all images, the best thing to do is try each colour space with each of the dithering techniques and play with the brightness to achieve the best results.
+
+I lumped most of this together on a spare Sunday afteroon so please don't judge my messy coding.
 
 Actual whiteboard image resolutions are 384 x 256, that's a 2:3 ratio for processing images outside of the application.
 
+Disclaimer: I have provided a compiled binary for your convenience but I do not expect you to trust it. You may download the source code and build the project in Visual Studio instead.
+
+Thanks to RJ#0514 for reminding me that this needed updating to support colour.
+
 <img width="1070" height="889" alt="Screenshot1" src="https://github.com/user-attachments/assets/80e6794f-d5c7-46fd-9cc9-1a58684fba6c" />
+<img width="1070" height="889" alt="image" src="https://github.com/user-attachments/assets/ee38a7bc-79bf-4f5f-96d2-fe1e3a3fd02e" />
 <img width="1019" height="818" alt="Screenshot2" src="https://github.com/user-attachments/assets/a2757a91-4a28-4ace-912c-77841de90b36" />
