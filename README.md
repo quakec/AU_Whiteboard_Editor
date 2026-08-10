@@ -8,6 +8,8 @@ Some of the colour spaces are heavily weighted towards certain colours, this is 
 
 Dithering doesn't work too well with noisy images, but remember we're working with just 8 colours. There is no single setting that will work for all images, the best thing to do is try each colour space with each of the dithering techniques and play with the brightness to achieve the best results.
 
+The slider options provide a small adjustment to the presence of a colour, it can help but doesn't for some dither/colour space combinations because the algorithms are complex.
+
 Actual whiteboard image resolutions are 384 x 256, that's a 3:2 ratio for processing images outside of the application.
 
 Disclaimer: I have provided a compiled binary (in the Binaries folder) for your convenience but I do not expect you to trust it. You may download the source code and build the project in Visual Studio instead.
