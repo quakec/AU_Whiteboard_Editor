@@ -4,10 +4,13 @@
     {
         public Color Color { get; set; }
         public byte WbValue { get; set; }
-        public WbColor(Color color)
+        public double Bias { get; set; }
+
+        public WbColor(Color color, double bias)
         {
             Color = color;
             WbValue = GetValue(color);
+            Bias = MapPaletteBias((1 - bias) / 100);
         }
 
         private byte GetValue(Color color)
@@ -30,6 +33,16 @@
                 return 0xF9;
 
            throw new Exception("Unsupported whiteboard colour.");
+        }
+
+        private static double MapPaletteBias(double bias)
+        {
+            bias = Math.Clamp(bias, 0.0, 1.0);
+
+            if (bias <= 0.5)
+                return 0.05 + (bias / 0.5) * 0.95;
+
+            return 1.0 + ((bias - 0.5) / 0.5) * 19.0;
         }
     }
 }

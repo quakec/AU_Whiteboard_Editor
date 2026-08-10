@@ -43,7 +43,6 @@ namespace AU_Whiteboard_Editor
             tabPage1 = new TabPage();
             tabPage2 = new TabPage();
             btnOpen = new Button();
-            lblPalette = new Label();
             chkPaletteBlack = new CheckBox();
             chkPaletteRed = new CheckBox();
             chkPaletteGreen = new CheckBox();
@@ -71,11 +70,27 @@ namespace AU_Whiteboard_Editor
             lblCropPosition = new Label();
             picOriginal = new PictureBox();
             cboBackfill = new ColorSelector();
+            trkBiasWhite = new TrackBar();
+            trkBiasBlack = new TrackBar();
+            trkBiasRed = new TrackBar();
+            trkBiasGreen = new TrackBar();
+            trkBiasBlue = new TrackBar();
+            trkBiasYellow = new TrackBar();
+            trkBiasMagenta = new TrackBar();
+            trkBiasCyan = new TrackBar();
             ((System.ComponentModel.ISupportInitialize)picImported).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trkCropPosition).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picWhiteboard).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trkBrightness).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picOriginal).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasWhite).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasBlack).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasRed).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasGreen).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasBlue).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasYellow).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasMagenta).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasCyan).BeginInit();
             SuspendLayout();
             // 
             // picImported
@@ -134,10 +149,10 @@ namespace AU_Whiteboard_Editor
             btnOverwrite.Enabled = false;
             btnOverwrite.Image = (Image)resources.GetObject("btnOverwrite.Image");
             btnOverwrite.ImageAlign = ContentAlignment.TopCenter;
-            btnOverwrite.Location = new Point(399, 200);
+            btnOverwrite.Location = new Point(399, 304);
             btnOverwrite.Name = "btnOverwrite";
             btnOverwrite.Size = new Size(78, 60);
-            btnOverwrite.TabIndex = 21;
+            btnOverwrite.TabIndex = 29;
             btnOverwrite.Text = "Overwrite";
             btnOverwrite.TextImageRelation = TextImageRelation.ImageAboveText;
             btnOverwrite.UseVisualStyleBackColor = true;
@@ -184,16 +199,6 @@ namespace AU_Whiteboard_Editor
             btnOpen.UseVisualStyleBackColor = true;
             btnOpen.Click += btnOpen_Click;
             // 
-            // lblPalette
-            // 
-            lblPalette.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblPalette.AutoSize = true;
-            lblPalette.Location = new Point(291, 39);
-            lblPalette.Name = "lblPalette";
-            lblPalette.Size = new Size(85, 15);
-            lblPalette.TabIndex = 10;
-            lblPalette.Text = "Colour Palette:";
-            // 
             // chkPaletteBlack
             // 
             chkPaletteBlack.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -204,7 +209,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteBlack.CheckState = CheckState.Checked;
             chkPaletteBlack.Font = new Font("Webdings", 12F);
             chkPaletteBlack.ForeColor = Color.White;
-            chkPaletteBlack.Location = new Point(402, 36);
+            chkPaletteBlack.Location = new Point(314, 38);
             chkPaletteBlack.Name = "chkPaletteBlack";
             chkPaletteBlack.Size = new Size(24, 24);
             chkPaletteBlack.TabIndex = 10;
@@ -224,7 +229,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteRed.CheckState = CheckState.Checked;
             chkPaletteRed.Font = new Font("Webdings", 12F);
             chkPaletteRed.ForeColor = Color.White;
-            chkPaletteRed.Location = new Point(425, 36);
+            chkPaletteRed.Location = new Point(337, 38);
             chkPaletteRed.Name = "chkPaletteRed";
             chkPaletteRed.Size = new Size(24, 24);
             chkPaletteRed.TabIndex = 11;
@@ -244,7 +249,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteGreen.CheckState = CheckState.Checked;
             chkPaletteGreen.Font = new Font("Webdings", 12F);
             chkPaletteGreen.ForeColor = Color.White;
-            chkPaletteGreen.Location = new Point(448, 36);
+            chkPaletteGreen.Location = new Point(360, 38);
             chkPaletteGreen.Name = "chkPaletteGreen";
             chkPaletteGreen.Size = new Size(24, 24);
             chkPaletteGreen.TabIndex = 12;
@@ -264,7 +269,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteBlue.CheckState = CheckState.Checked;
             chkPaletteBlue.Font = new Font("Webdings", 12F);
             chkPaletteBlue.ForeColor = Color.White;
-            chkPaletteBlue.Location = new Point(471, 36);
+            chkPaletteBlue.Location = new Point(383, 38);
             chkPaletteBlue.Name = "chkPaletteBlue";
             chkPaletteBlue.Size = new Size(24, 24);
             chkPaletteBlue.TabIndex = 13;
@@ -284,7 +289,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteYellow.CheckState = CheckState.Checked;
             chkPaletteYellow.Font = new Font("Webdings", 12F);
             chkPaletteYellow.ForeColor = Color.Black;
-            chkPaletteYellow.Location = new Point(494, 36);
+            chkPaletteYellow.Location = new Point(406, 38);
             chkPaletteYellow.Name = "chkPaletteYellow";
             chkPaletteYellow.Size = new Size(24, 24);
             chkPaletteYellow.TabIndex = 14;
@@ -304,7 +309,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteMagenta.CheckState = CheckState.Checked;
             chkPaletteMagenta.Font = new Font("Webdings", 12F);
             chkPaletteMagenta.ForeColor = Color.White;
-            chkPaletteMagenta.Location = new Point(517, 36);
+            chkPaletteMagenta.Location = new Point(429, 38);
             chkPaletteMagenta.Name = "chkPaletteMagenta";
             chkPaletteMagenta.Size = new Size(24, 24);
             chkPaletteMagenta.TabIndex = 15;
@@ -324,7 +329,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteCyan.CheckState = CheckState.Checked;
             chkPaletteCyan.Font = new Font("Webdings", 12F, FontStyle.Regular, GraphicsUnit.Point, 2);
             chkPaletteCyan.ForeColor = Color.Black;
-            chkPaletteCyan.Location = new Point(540, 36);
+            chkPaletteCyan.Location = new Point(452, 38);
             chkPaletteCyan.Name = "chkPaletteCyan";
             chkPaletteCyan.Size = new Size(24, 24);
             chkPaletteCyan.TabIndex = 16;
@@ -386,9 +391,9 @@ namespace AU_Whiteboard_Editor
             cboDitherType.DropDownWidth = 215;
             cboDitherType.Enabled = false;
             cboDitherType.FormattingEnabled = true;
-            cboDitherType.Location = new Point(767, 36);
+            cboDitherType.Location = new Point(683, 36);
             cboDitherType.Name = "cboDitherType";
-            cboDitherType.Size = new Size(123, 23);
+            cboDitherType.Size = new Size(173, 23);
             cboDitherType.TabIndex = 18;
             cboDitherType.SelectedIndexChanged += cboDitherType_SelectedIndexChanged;
             // 
@@ -396,7 +401,7 @@ namespace AU_Whiteboard_Editor
             // 
             lblDitherType.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblDitherType.AutoSize = true;
-            lblDitherType.Location = new Point(706, 39);
+            lblDitherType.Location = new Point(619, 39);
             lblDitherType.Name = "lblDitherType";
             lblDitherType.Size = new Size(59, 15);
             lblDitherType.TabIndex = 23;
@@ -446,7 +451,7 @@ namespace AU_Whiteboard_Editor
             chkPaletteWhite.CheckState = CheckState.Checked;
             chkPaletteWhite.Font = new Font("Webdings", 12F);
             chkPaletteWhite.ForeColor = Color.Black;
-            chkPaletteWhite.Location = new Point(379, 36);
+            chkPaletteWhite.Location = new Point(291, 38);
             chkPaletteWhite.Name = "chkPaletteWhite";
             chkPaletteWhite.Size = new Size(24, 24);
             chkPaletteWhite.TabIndex = 9;
@@ -460,7 +465,7 @@ namespace AU_Whiteboard_Editor
             // 
             picWhiteboard.BackColor = SystemColors.Window;
             picWhiteboard.BorderStyle = BorderStyle.FixedSingle;
-            picWhiteboard.Location = new Point(285, 66);
+            picWhiteboard.Location = new Point(285, 170);
             picWhiteboard.Name = "picWhiteboard";
             picWhiteboard.Size = new Size(192, 128);
             picWhiteboard.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -482,7 +487,7 @@ namespace AU_Whiteboard_Editor
             // trkBrightness
             // 
             trkBrightness.AutoSize = false;
-            trkBrightness.Location = new Point(636, 34);
+            trkBrightness.Location = new Point(551, 34);
             trkBrightness.Maximum = 50;
             trkBrightness.Name = "trkBrightness";
             trkBrightness.Size = new Size(69, 30);
@@ -498,9 +503,9 @@ namespace AU_Whiteboard_Editor
             cboColorSpace.DropDownWidth = 140;
             cboColorSpace.Enabled = false;
             cboColorSpace.FormattingEnabled = true;
-            cboColorSpace.Location = new Point(976, 36);
+            cboColorSpace.Location = new Point(941, 36);
             cboColorSpace.Name = "cboColorSpace";
-            cboColorSpace.Size = new Size(83, 23);
+            cboColorSpace.Size = new Size(118, 23);
             cboColorSpace.TabIndex = 19;
             cboColorSpace.SelectedIndexChanged += cboColorSpace_SelectedIndexChanged;
             // 
@@ -509,7 +514,7 @@ namespace AU_Whiteboard_Editor
             lblColorSpace.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblColorSpace.AutoSize = true;
             lblColorSpace.Enabled = false;
-            lblColorSpace.Location = new Point(897, 39);
+            lblColorSpace.Location = new Point(862, 39);
             lblColorSpace.Name = "lblColorSpace";
             lblColorSpace.Size = new Size(73, 15);
             lblColorSpace.TabIndex = 32;
@@ -519,7 +524,7 @@ namespace AU_Whiteboard_Editor
             // 
             lblBrightness.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblBrightness.AutoSize = true;
-            lblBrightness.Location = new Point(571, 39);
+            lblBrightness.Location = new Point(486, 39);
             lblBrightness.Name = "lblBrightness";
             lblBrightness.Size = new Size(65, 15);
             lblBrightness.TabIndex = 33;
@@ -559,11 +564,139 @@ namespace AU_Whiteboard_Editor
             cboBackfill.TabIndex = 4;
             cboBackfill.SelectedIndexChanged += cboBackfill_SelectedIndexChanged;
             // 
+            // trkBiasWhite
+            // 
+            trkBiasWhite.AutoSize = false;
+            trkBiasWhite.BackColor = SystemColors.Control;
+            trkBiasWhite.Location = new Point(293, 66);
+            trkBiasWhite.Maximum = 100;
+            trkBiasWhite.Name = "trkBiasWhite";
+            trkBiasWhite.Orientation = Orientation.Vertical;
+            trkBiasWhite.Size = new Size(20, 100);
+            trkBiasWhite.TabIndex = 21;
+            trkBiasWhite.TickFrequency = 25;
+            trkBiasWhite.TickStyle = TickStyle.None;
+            trkBiasWhite.Value = 50;
+            trkBiasWhite.Scroll += trkBiasWhite_Scroll;
+            // 
+            // trkBiasBlack
+            // 
+            trkBiasBlack.AutoSize = false;
+            trkBiasBlack.BackColor = SystemColors.Control;
+            trkBiasBlack.Location = new Point(317, 66);
+            trkBiasBlack.Maximum = 100;
+            trkBiasBlack.Name = "trkBiasBlack";
+            trkBiasBlack.Orientation = Orientation.Vertical;
+            trkBiasBlack.Size = new Size(20, 100);
+            trkBiasBlack.TabIndex = 22;
+            trkBiasBlack.TickFrequency = 25;
+            trkBiasBlack.TickStyle = TickStyle.None;
+            trkBiasBlack.Value = 50;
+            trkBiasBlack.Scroll += trkBiasBlack_Scroll;
+            // 
+            // trkBiasRed
+            // 
+            trkBiasRed.AutoSize = false;
+            trkBiasRed.BackColor = SystemColors.Control;
+            trkBiasRed.Location = new Point(340, 66);
+            trkBiasRed.Maximum = 100;
+            trkBiasRed.Name = "trkBiasRed";
+            trkBiasRed.Orientation = Orientation.Vertical;
+            trkBiasRed.Size = new Size(20, 100);
+            trkBiasRed.TabIndex = 23;
+            trkBiasRed.TickFrequency = 25;
+            trkBiasRed.TickStyle = TickStyle.None;
+            trkBiasRed.Value = 50;
+            trkBiasRed.Scroll += trkBiasRed_Scroll;
+            // 
+            // trkBiasGreen
+            // 
+            trkBiasGreen.AutoSize = false;
+            trkBiasGreen.BackColor = SystemColors.Control;
+            trkBiasGreen.Location = new Point(363, 66);
+            trkBiasGreen.Maximum = 100;
+            trkBiasGreen.Name = "trkBiasGreen";
+            trkBiasGreen.Orientation = Orientation.Vertical;
+            trkBiasGreen.Size = new Size(20, 100);
+            trkBiasGreen.TabIndex = 24;
+            trkBiasGreen.TickFrequency = 25;
+            trkBiasGreen.TickStyle = TickStyle.None;
+            trkBiasGreen.Value = 50;
+            trkBiasGreen.Scroll += trkBiasGreen_Scroll;
+            // 
+            // trkBiasBlue
+            // 
+            trkBiasBlue.AutoSize = false;
+            trkBiasBlue.BackColor = SystemColors.Control;
+            trkBiasBlue.Location = new Point(387, 66);
+            trkBiasBlue.Maximum = 100;
+            trkBiasBlue.Name = "trkBiasBlue";
+            trkBiasBlue.Orientation = Orientation.Vertical;
+            trkBiasBlue.Size = new Size(20, 100);
+            trkBiasBlue.TabIndex = 25;
+            trkBiasBlue.TickFrequency = 25;
+            trkBiasBlue.TickStyle = TickStyle.None;
+            trkBiasBlue.Value = 50;
+            trkBiasBlue.Scroll += trkBiasBlue_Scroll;
+            // 
+            // trkBiasYellow
+            // 
+            trkBiasYellow.AutoSize = false;
+            trkBiasYellow.BackColor = SystemColors.Control;
+            trkBiasYellow.Location = new Point(410, 66);
+            trkBiasYellow.Maximum = 100;
+            trkBiasYellow.Name = "trkBiasYellow";
+            trkBiasYellow.Orientation = Orientation.Vertical;
+            trkBiasYellow.Size = new Size(20, 100);
+            trkBiasYellow.TabIndex = 26;
+            trkBiasYellow.TickFrequency = 25;
+            trkBiasYellow.TickStyle = TickStyle.None;
+            trkBiasYellow.Value = 50;
+            trkBiasYellow.Scroll += trkBiasYellow_Scroll;
+            // 
+            // trkBiasMagenta
+            // 
+            trkBiasMagenta.AutoSize = false;
+            trkBiasMagenta.BackColor = SystemColors.Control;
+            trkBiasMagenta.Location = new Point(433, 66);
+            trkBiasMagenta.Maximum = 100;
+            trkBiasMagenta.Name = "trkBiasMagenta";
+            trkBiasMagenta.Orientation = Orientation.Vertical;
+            trkBiasMagenta.Size = new Size(20, 100);
+            trkBiasMagenta.TabIndex = 27;
+            trkBiasMagenta.TickFrequency = 25;
+            trkBiasMagenta.TickStyle = TickStyle.None;
+            trkBiasMagenta.Value = 50;
+            trkBiasMagenta.Scroll += trkBiasMagenta_Scroll;
+            // 
+            // trkBiasCyan
+            // 
+            trkBiasCyan.AutoSize = false;
+            trkBiasCyan.BackColor = SystemColors.Control;
+            trkBiasCyan.Location = new Point(456, 66);
+            trkBiasCyan.Maximum = 100;
+            trkBiasCyan.Name = "trkBiasCyan";
+            trkBiasCyan.Orientation = Orientation.Vertical;
+            trkBiasCyan.Size = new Size(20, 100);
+            trkBiasCyan.TabIndex = 28;
+            trkBiasCyan.TickFrequency = 25;
+            trkBiasCyan.TickStyle = TickStyle.None;
+            trkBiasCyan.Value = 50;
+            trkBiasCyan.Scroll += trkBiasCyan_Scroll;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1068, 857);
+            Controls.Add(trkBiasCyan);
+            Controls.Add(trkBiasMagenta);
+            Controls.Add(trkBiasYellow);
+            Controls.Add(trkBiasBlue);
+            Controls.Add(trkBiasGreen);
+            Controls.Add(trkBiasRed);
+            Controls.Add(trkBiasBlack);
+            Controls.Add(trkBiasWhite);
             Controls.Add(trkBrightness);
             Controls.Add(lblBrightness);
             Controls.Add(cboBackfill);
@@ -590,7 +723,6 @@ namespace AU_Whiteboard_Editor
             Controls.Add(chkPaletteGreen);
             Controls.Add(chkPaletteRed);
             Controls.Add(chkPaletteBlack);
-            Controls.Add(lblPalette);
             Controls.Add(btnOpen);
             Controls.Add(btnRefresh);
             Controls.Add(btnOverwrite);
@@ -609,6 +741,14 @@ namespace AU_Whiteboard_Editor
             ((System.ComponentModel.ISupportInitialize)picWhiteboard).EndInit();
             ((System.ComponentModel.ISupportInitialize)trkBrightness).EndInit();
             ((System.ComponentModel.ISupportInitialize)picOriginal).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasWhite).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasBlack).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasRed).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasGreen).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasBlue).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasYellow).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasMagenta).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trkBiasCyan).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -625,7 +765,6 @@ namespace AU_Whiteboard_Editor
         private TabPage tabPage1;
         private TabPage tabPage2;
         private Button btnOpen;
-        private Label lblPalette;
         private CheckBox chkPaletteBlack;
         private CheckBox chkPaletteRed;
         private CheckBox chkPaletteGreen;
@@ -653,5 +792,13 @@ namespace AU_Whiteboard_Editor
         private Label lblBrightness;
         private Label lblCropPosition;
         private PictureBox picOriginal;
+        private TrackBar trkBiasWhite;
+        private TrackBar trkBiasBlack;
+        private TrackBar trkBiasRed;
+        private TrackBar trkBiasGreen;
+        private TrackBar trkBiasBlue;
+        private TrackBar trkBiasYellow;
+        private TrackBar trkBiasMagenta;
+        private TrackBar trkBiasCyan;
     }
 }

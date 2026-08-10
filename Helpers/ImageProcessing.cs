@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -239,32 +240,45 @@ namespace AU_Whiteboard_Editor.Helpers
 
             return result;
         }
-        private readonly struct ColourValue
+
+        private readonly struct ColorValue
         {
             public readonly double V1;
             public readonly double V2;
             public readonly double V3;
 
-            public ColourValue(double v1, double v2, double v3)
+            public ColorValue(double v1, double v2, double v3) 
             {
                 V1 = v1;
                 V2 = v2;
                 V3 = v3;
             }
 
-            public static ColourValue operator +(ColourValue left, ColourValue right)
+            public static ColorValue operator +(ColorValue left, ColorValue right)
             {
-                return new ColourValue(left.V1 + right.V1, left.V2 + right.V2, left.V3 + right.V3);
+                return new ColorValue(left.V1 + right.V1, left.V2 + right.V2, left.V3 + right.V3);
             }
 
-            public static ColourValue operator -(ColourValue left, ColourValue right)
+            public static ColorValue operator -(ColorValue left, ColorValue right)
             {
-                return new ColourValue(left.V1 - right.V1, left.V2 - right.V2, left.V3 - right.V3);
+                return new ColorValue(left.V1 - right.V1, left.V2 - right.V2, left.V3 - right.V3);
             }
 
-            public static ColourValue operator *(ColourValue value, double amount)
+            public static ColorValue operator *(ColorValue value, double amount)
             {
-                return new ColourValue(value.V1 * amount, value.V2 * amount, value.V3 * amount);
+                return new ColorValue(value.V1 * amount, value.V2 * amount, value.V3 * amount);
+            }
+        }
+
+        private readonly struct PaletteValue
+        {
+            public readonly ColorValue Color;
+            public readonly double Multiplier;
+
+            public PaletteValue(ColorValue colour, double multiplier)
+            {
+                Color = colour;
+                Multiplier = multiplier;
             }
         }
 
@@ -381,37 +395,37 @@ namespace AU_Whiteboard_Editor.Helpers
             { 63, 31, 55, 23, 61, 29, 53, 21 }
         };
 
-        private static ColourValue ToColourSpace(Color colour, ColorSpace colorSpace)
+        private static ColorValue ToColorSpace(Color Color, ColorSpace colorSpace)
         {
             switch (colorSpace)
             {
                 case ColorSpace.Rgb:
                 case ColorSpace.RgbEuclidean:
-                    return new ColourValue(colour.R, colour.G, colour.B);
+                    return new ColorValue(Color.R, Color.G, Color.B);
 
                 case ColorSpace.LinearRgb:
-                    return new ColourValue(SrgbToLinear(colour.R / 255.0), SrgbToLinear(colour.G / 255.0), SrgbToLinear(colour.B / 255.0));
+                    return new ColorValue(SrgbToLinear(Color.R / 255.0), SrgbToLinear(Color.G / 255.0), SrgbToLinear(Color.B / 255.0));
 
                 case ColorSpace.CieXyz:
-                    return RgbToXyz(colour);
+                    return RgbToXyz(Color);
 
                 case ColorSpace.CieLab:
-                    return XyzToLab(RgbToXyz(colour));
+                    return XyzToLab(RgbToXyz(Color));
 
                 case ColorSpace.OkLab:
                 case ColorSpace.OkLch:
                 case ColorSpace.AuPalette:
-                    return RgbToOklab(colour);
+                    return RgbToOklab(Color);
 
                 case ColorSpace.YCbCr:
-                    return RgbToYCbCr(colour);
+                    return RgbToYCbCr(Color);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(colorSpace));
             }
         }
 
-        private static Color FromColourSpace(ColourValue value, ColorSpace colorSpace)
+        private static Color FromColorSpace(ColorValue value, ColorSpace colorSpace)
         {
             switch (colorSpace)
             {
@@ -441,7 +455,7 @@ namespace AU_Whiteboard_Editor.Helpers
             }
         }
 
-        private static double ColourDistance(ColourValue source, ColourValue target, ColorSpace colorSpace)
+        private static double ColorDistance(ColorValue source, ColorValue target, ColorSpace colorSpace)
         {
             double d1 = source.V1 - target.V1;
             double d2 = source.V2 - target.V2;
@@ -471,7 +485,7 @@ namespace AU_Whiteboard_Editor.Helpers
             }
         }
 
-        private static double OkLchDistance(ColourValue source, ColourValue target, double lightnessWeight, double chromaWeight, double hueWeight)
+        private static double OkLchDistance(ColorValue source, ColorValue target, double lightnessWeight, double chromaWeight, double hueWeight)
         {
             (double sourceL, double sourceC, double sourceH) = OklabToOklch(source);
             (double targetL, double targetC, double targetH) = OklabToOklch(target);
@@ -485,7 +499,7 @@ namespace AU_Whiteboard_Editor.Helpers
             return dL * dL * lightnessWeight + dC * dC * chromaWeight + dH * dH * hueStrength * hueWeight;
         }
 
-        private static double AuPaletteDistance(ColourValue source, ColourValue target)
+        private static double AuPaletteDistance(ColorValue source, ColorValue target)
         {
             (double sourceL, double sourceC, double sourceH) = OklabToOklch(source);
             (double targetL, double targetC, double targetH) = OklabToOklch(target);
@@ -515,7 +529,7 @@ namespace AU_Whiteboard_Editor.Helpers
             return distance;
         }
 
-        private static (double L, double C, double H) OklabToOklch(ColourValue value)
+        private static (double L, double C, double H) OklabToOklch(ColorValue value)
         {
             double chroma = Math.Sqrt(value.V2 * value.V2 + value.V3 * value.V3);
             double hue = Math.Atan2(value.V3, value.V2);
@@ -549,24 +563,29 @@ namespace AU_Whiteboard_Editor.Helpers
             return hue >= start || hue <= end;
         }
 
-        private static ColourValue[] BuildPaletteValues(WbColor[] palette, ColorSpace colorSpace)
+        private static PaletteValue[] BuildPaletteValues(WbColor[] palette, ColorSpace colorSpace)
         {
-            ColourValue[] values = new ColourValue[palette.Length];
+            PaletteValue[] values = new PaletteValue[palette.Length];
 
             for (int i = 0; i < palette.Length; i++)
-                values[i] = ToColourSpace(palette[i].Color, colorSpace);
+            {
+                double multiplier = palette[i].Bias;
+
+                values[i] = new PaletteValue(ToColorSpace(palette[i].Color, colorSpace), multiplier);
+            }
 
             return values;
         }
 
-        private static int FindNearestColourIndex(ColourValue source, ColourValue[] paletteValues, ColorSpace colorSpace)
+        private static int FindNearestColorIndex(ColorValue source, PaletteValue[] paletteValues, ColorSpace colorSpace)
         {
             int nearestIndex = 0;
             double nearestDistance = double.MaxValue;
 
             for (int i = 0; i < paletteValues.Length; i++)
             {
-                double distance = ColourDistance(source, paletteValues[i], colorSpace);
+                double distance = ColorDistance(source, paletteValues[i].Color, colorSpace);
+                distance *= paletteValues[i].Multiplier;
 
                 if (distance < nearestDistance)
                 {
@@ -578,11 +597,11 @@ namespace AU_Whiteboard_Editor.Helpers
             return nearestIndex;
         }
 
-        private static ColourValue RgbToOklab(Color colour)
+        private static ColorValue RgbToOklab(Color Color)
         {
-            double r = SrgbToLinear(colour.R / 255.0);
-            double g = SrgbToLinear(colour.G / 255.0);
-            double b = SrgbToLinear(colour.B / 255.0);
+            double r = SrgbToLinear(Color.R / 255.0);
+            double g = SrgbToLinear(Color.G / 255.0);
+            double b = SrgbToLinear(Color.B / 255.0);
 
             double l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
             double m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
@@ -592,13 +611,13 @@ namespace AU_Whiteboard_Editor.Helpers
             double m_ = Math.Cbrt(m);
             double s_ = Math.Cbrt(s);
 
-            return new ColourValue(
+            return new ColorValue(
                 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_,
                 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_,
                 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_);
         }
 
-        private static Color OklabToRgb(ColourValue value)
+        private static Color OklabToRgb(ColorValue value)
         {
             double l_ = value.V1 + 0.3963377774 * value.V2 + 0.2158037573 * value.V3;
             double m_ = value.V1 - 0.1055613458 * value.V2 - 0.0638541728 * value.V3;
@@ -615,19 +634,19 @@ namespace AU_Whiteboard_Editor.Helpers
             return Color.FromArgb(255, Clamp255(LinearToSrgb(r)), Clamp255(LinearToSrgb(g)), Clamp255(LinearToSrgb(b)));
         }
 
-        private static ColourValue RgbToXyz(Color colour)
+        private static ColorValue RgbToXyz(Color Color)
         {
-            double r = SrgbToLinear(colour.R / 255.0);
-            double g = SrgbToLinear(colour.G / 255.0);
-            double b = SrgbToLinear(colour.B / 255.0);
+            double r = SrgbToLinear(Color.R / 255.0);
+            double g = SrgbToLinear(Color.G / 255.0);
+            double b = SrgbToLinear(Color.B / 255.0);
 
-            return new ColourValue(
+            return new ColorValue(
                 0.4124564 * r + 0.3575761 * g + 0.1804375 * b,
                 0.2126729 * r + 0.7151522 * g + 0.0721750 * b,
                 0.0193339 * r + 0.1191920 * g + 0.9503041 * b);
         }
 
-        private static Color XyzToRgb(ColourValue xyz)
+        private static Color XyzToRgb(ColorValue xyz)
         {
             double r = 3.2404542 * xyz.V1 - 1.5371385 * xyz.V2 - 0.4985314 * xyz.V3;
             double g = -0.9692660 * xyz.V1 + 1.8760108 * xyz.V2 + 0.0415560 * xyz.V3;
@@ -636,7 +655,7 @@ namespace AU_Whiteboard_Editor.Helpers
             return Color.FromArgb(255, Clamp255(LinearToSrgb(r)), Clamp255(LinearToSrgb(g)), Clamp255(LinearToSrgb(b)));
         }
 
-        private static ColourValue XyzToLab(ColourValue xyz)
+        private static ColorValue XyzToLab(ColorValue xyz)
         {
             const double xn = 0.95047;
             const double yn = 1.00000;
@@ -646,13 +665,13 @@ namespace AU_Whiteboard_Editor.Helpers
             double y = LabF(xyz.V2 / yn);
             double z = LabF(xyz.V3 / zn);
 
-            return new ColourValue(
+            return new ColorValue(
                 116.0 * y - 16.0,
                 500.0 * (x - y),
                 200.0 * (y - z));
         }
 
-        private static ColourValue LabToXyz(ColourValue lab)
+        private static ColorValue LabToXyz(ColorValue lab)
         {
             const double xn = 0.95047;
             const double yn = 1.00000;
@@ -662,26 +681,26 @@ namespace AU_Whiteboard_Editor.Helpers
             double fx = fy + lab.V2 / 500.0;
             double fz = fy - lab.V3 / 200.0;
 
-            return new ColourValue(
+            return new ColorValue(
                 xn * LabFInverse(fx),
                 yn * LabFInverse(fy),
                 zn * LabFInverse(fz));
         }
 
-        private static ColourValue RgbToYCbCr(Color colour)
+        private static ColorValue RgbToYCbCr(Color Color)
         {
-            double r = colour.R / 255.0;
-            double g = colour.G / 255.0;
-            double b = colour.B / 255.0;
+            double r = Color.R / 255.0;
+            double g = Color.G / 255.0;
+            double b = Color.B / 255.0;
 
             double y = 0.299 * r + 0.587 * g + 0.114 * b;
             double cb = (b - y) / 1.772;
             double cr = (r - y) / 1.402;
 
-            return new ColourValue(y, cb, cr);
+            return new ColorValue(y, cb, cr);
         }
 
-        private static Color YCbCrToRgb(ColourValue value)
+        private static Color YCbCrToRgb(ColorValue value)
         {
             double r = value.V1 + 1.402 * value.V3;
             double b = value.V1 + 1.772 * value.V2;
@@ -769,7 +788,7 @@ namespace AU_Whiteboard_Editor.Helpers
             return Color.FromArgb(source.A, Clamp(source.R + threshold), Clamp(source.G + threshold), Clamp(source.B + threshold));
         }
 
-        private static void DiffuseError(ColourValue[,] errors, int x, int y, int width, int height, int direction, ColourValue error, DitherType ditherType)
+        private static void DiffuseError(ColorValue[,] errors, int x, int y, int width, int height, int direction, ColorValue error, DitherType ditherType)
         {
             DitherPoint[] kernel = GetDitherKernel(ditherType);
 
@@ -812,7 +831,7 @@ namespace AU_Whiteboard_Editor.Helpers
             Bitmap input = ownsInput ? CreateArgbCopy(source) : source;
 
             Bitmap result = new Bitmap(input.Width, input.Height, PixelFormat.Format32bppArgb);
-            ColourValue[] paletteValues = BuildPaletteValues(palette, colorSpace);
+            PaletteValue[] paletteValues = BuildPaletteValues(palette, colorSpace);
 
             Rectangle rectangle = new Rectangle(0, 0, input.Width, input.Height);
             BitmapData inputData = input.LockBits(rectangle, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
@@ -837,18 +856,18 @@ namespace AU_Whiteboard_Editor.Helpers
                         byte r = inputRow[offset + 2];
                         byte a = inputRow[offset + 3];
 
-                        Color sourceColour = Color.FromArgb(a, r, g, b);
+                        Color sourceColor = Color.FromArgb(a, r, g, b);
 
                         if (a < 128)
-                            sourceColour = Color.White;
+                            sourceColor = Color.White;
 
-                        ColourValue sourceValue = ToColourSpace(sourceColour, colorSpace);
-                        int paletteIndex = FindNearestColourIndex(sourceValue, paletteValues, colorSpace);
-                        Color paletteColour = palette[paletteIndex].Color;
+                        ColorValue sourceValue = ToColorSpace(sourceColor, colorSpace);
+                        int paletteIndex = FindNearestColorIndex(sourceValue, paletteValues, colorSpace);
+                        Color paletteColor = palette[paletteIndex].Color;
 
-                        resultRow[offset] = paletteColour.B;
-                        resultRow[offset + 1] = paletteColour.G;
-                        resultRow[offset + 2] = paletteColour.R;
+                        resultRow[offset] = paletteColor.B;
+                        resultRow[offset + 1] = paletteColor.G;
+                        resultRow[offset + 2] = paletteColor.R;
                         resultRow[offset + 3] = 255;
                     }
                 }
@@ -881,8 +900,8 @@ namespace AU_Whiteboard_Editor.Helpers
 
             Bitmap result = new Bitmap(width, height, PixelFormat.Format32bppArgb);
 
-            ColourValue[,] errors = new ColourValue[width, height];
-            ColourValue[] paletteValues = BuildPaletteValues(palette, colorSpace);
+            ColorValue[,] errors = new ColorValue[width, height];
+            PaletteValue[] paletteValues = BuildPaletteValues(palette, colorSpace);
 
             Rectangle rectangle = new Rectangle(0, 0, width, height);
             BitmapData sourceData = input.LockBits(rectangle, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
@@ -913,28 +932,28 @@ namespace AU_Whiteboard_Editor.Helpers
                         byte sourceR = sourceRow[offset + 2];
                         byte sourceA = sourceRow[offset + 3];
 
-                        Color sourceColour = Color.FromArgb(sourceA, sourceR, sourceG, sourceB);
+                        Color sourceColor = Color.FromArgb(sourceA, sourceR, sourceG, sourceB);
 
                         if (sourceA < 128)
-                            sourceColour = Color.White;
+                            sourceColor = Color.White;
 
-                        sourceColour = ApplyOrderedDither(sourceColour, x, y, ditherType);
+                        sourceColor = ApplyOrderedDither(sourceColor, x, y, ditherType);
 
-                        ColourValue adjustedValue = ToColourSpace(sourceColour, colorSpace) + errors[x, y];
+                        ColorValue adjustedValue = ToColorSpace(sourceColor, colorSpace) + errors[x, y];
 
                         // round-trip through RGB so out-of-gamut error values are clipped consistently.
-                        Color adjustedColour = FromColourSpace(adjustedValue, colorSpace);
-                        adjustedValue = ToColourSpace(adjustedColour, colorSpace);
+                        Color adjustedColor = FromColorSpace(adjustedValue, colorSpace);
+                        adjustedValue = ToColorSpace(adjustedColor, colorSpace);
 
-                        int paletteIndex = FindNearestColourIndex(adjustedValue, paletteValues, colorSpace);
-                        Color paletteColour = palette[paletteIndex].Color;
+                        int paletteIndex = FindNearestColorIndex(adjustedValue, paletteValues, colorSpace);
+                        Color paletteColor = palette[paletteIndex].Color;
 
-                        resultRow[offset] = paletteColour.B;
-                        resultRow[offset + 1] = paletteColour.G;
-                        resultRow[offset + 2] = paletteColour.R;
+                        resultRow[offset] = paletteColor.B;
+                        resultRow[offset + 1] = paletteColor.G;
+                        resultRow[offset + 2] = paletteColor.R;
                         resultRow[offset + 3] = 255;
 
-                        ColourValue error = adjustedValue - paletteValues[paletteIndex];
+                        ColorValue error = adjustedValue - paletteValues[paletteIndex].Color;
 
                         DiffuseError(errors, x, y, width, height, direction, error, ditherType);
                     }

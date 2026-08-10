@@ -203,13 +203,13 @@ namespace AU_Whiteboard_Editor
             ImageProcessing.ResizeMode resizeMode = (ImageProcessing.ResizeMode)cboResizeMode.SelectedItem;
             bitmap = ImageProcessing.ResizeBitmap(bitmap, selectedBackFill.Color, resizeMode, trkCropPosition.Value);
 
-            // brightness
-            if (trkBrightness.Value != 25)
-                bitmap = ImageProcessing.AdjustBrightness(bitmap, trkBrightness.Value - 25);
-
             originalImage?.Dispose();
             originalImage = ImageProcessing.CropBitmap(bitmap, selectedBackFill.Color, resizeMode, trkCropPosition.Value);
             ShowOriginalImage(originalImage);
+
+            // brightness
+            if (trkBrightness.Value != 25)
+                bitmap = ImageProcessing.AdjustBrightness(bitmap, trkBrightness.Value - 25);
 
             // apply dither
             ImageProcessing.DitherType ditherType = (ImageProcessing.DitherType)cboDitherType.SelectedItem;
@@ -258,14 +258,14 @@ namespace AU_Whiteboard_Editor
         private void UpdatePaletteFromUserSelected()
         {
             List<WbColor> wbColors = new List<WbColor>();
-            if (chkPaletteWhite.Checked) wbColors.Add(new WbColor(Color.White));
-            if (chkPaletteBlack.Checked) wbColors.Add(new WbColor(Color.Black));
-            if (chkPaletteRed.Checked) wbColors.Add(new WbColor(Color.Red));
-            if (chkPaletteGreen.Checked) wbColors.Add(new WbColor(Color.Green));
-            if (chkPaletteBlue.Checked) wbColors.Add(new WbColor(Color.Blue));
-            if (chkPaletteYellow.Checked) wbColors.Add(new WbColor(Color.Yellow));
-            if (chkPaletteMagenta.Checked) wbColors.Add(new WbColor(Color.Magenta));
-            if (chkPaletteCyan.Checked) wbColors.Add(new WbColor(Color.Cyan));
+            if (chkPaletteWhite.Checked) wbColors.Add(new WbColor(Color.White, trkBiasWhite.Value));
+            if (chkPaletteBlack.Checked) wbColors.Add(new WbColor(Color.Black, trkBiasBlack.Value));
+            if (chkPaletteRed.Checked) wbColors.Add(new WbColor(Color.Red, trkBiasRed.Value));
+            if (chkPaletteGreen.Checked) wbColors.Add(new WbColor(Color.Green, trkBiasGreen.Value));
+            if (chkPaletteBlue.Checked) wbColors.Add(new WbColor(Color.Blue, trkBiasBlue.Value));
+            if (chkPaletteYellow.Checked) wbColors.Add(new WbColor(Color.Yellow, trkBiasYellow.Value));
+            if (chkPaletteMagenta.Checked) wbColors.Add(new WbColor(Color.Magenta, trkBiasMagenta.Value));
+            if (chkPaletteCyan.Checked) wbColors.Add(new WbColor(Color.Cyan, trkBiasCyan.Value));
             palette = wbColors.ToArray();
         }
 
@@ -343,6 +343,14 @@ namespace AU_Whiteboard_Editor
                 chkPaletteYellow.Checked = true;
                 chkPaletteMagenta.Checked = true;
                 chkPaletteCyan.Checked = true;
+                trkBiasWhite.Value = 50;
+                trkBiasBlack.Value = 50;
+                trkBiasRed.Value = 50;
+                trkBiasGreen.Value = 50;
+                trkBiasBlue.Value = 50;
+                trkBiasYellow.Value = 50;
+                trkBiasMagenta.Value = 50;
+                trkBiasCyan.Value = 50;
                 suppressOptionChange = false;
 
                 ApplyImageProcessing(originalLoadedImage);
@@ -407,6 +415,56 @@ namespace AU_Whiteboard_Editor
             chkPaletteCyan.Text = chkPaletteCyan.Checked ? "a" : "";
             OptionChanged();
         }
+
+
+        private void trkBiasWhite_Scroll(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(trkBiasWhite, (trkBiasWhite.Value - 50).ToString());
+            OptionChanged();
+        }
+
+        private void trkBiasBlack_Scroll(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(trkBiasBlack, (trkBiasBlack.Value - 50).ToString());
+            OptionChanged();
+        }
+
+        private void trkBiasRed_Scroll(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(trkBiasRed, (trkBiasRed.Value - 50).ToString());
+            OptionChanged();
+        }
+
+        private void trkBiasGreen_Scroll(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(trkBiasGreen, (trkBiasGreen.Value - 50).ToString());
+            OptionChanged();
+        }
+
+        private void trkBiasBlue_Scroll(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(trkBiasBlue, (trkBiasBlue.Value - 50).ToString());
+            OptionChanged();
+        }
+
+        private void trkBiasYellow_Scroll(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(trkBiasYellow, (trkBiasYellow.Value - 50).ToString());
+            OptionChanged();
+        }
+
+        private void trkBiasMagenta_Scroll(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(trkBiasMagenta, (trkBiasMagenta.Value - 50).ToString());
+            OptionChanged();
+        }
+
+        private void trkBiasCyan_Scroll(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(trkBiasCyan, (trkBiasCyan.Value - 50).ToString());
+            OptionChanged();
+        }
+
         private void trkBrightness_Scroll(object sender, EventArgs e)
         {
             toolTip.SetToolTip(trkBrightness, (trkBrightness.Value - 25).ToString());
@@ -478,5 +536,6 @@ namespace AU_Whiteboard_Editor
         {
             btnOpen_Click(sender, e);
         }
+
     }
 }
