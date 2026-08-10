@@ -2,15 +2,13 @@ A whiteboard editor for Approximately Up
 
 This tool allows you to open any image, format it and overwrite your whiteboards, it includes automatic ship enumeration, dithering and crop tools with the ability to filter the palette colours.
 
-Some of the colour spaces are heavily weighted towards certain colours, this is why I've included the option to filter colours.
+Some of the colour spaces are heavily weighted towards certain colours, this is why I've included the option to filter colours. In fact removing green has helped in a lot of cases with blues and even greens.
 
 Dithering doesn't work too well with noisy images, but remember we're working with just 8 colours. There is no single setting that will work for all images, the best thing to do is try each colour space with each of the dithering techniques and play with the brightness to achieve the best results.
 
-I lumped most of this together on a spare Sunday afteroon so please don't judge my messy coding.
-
 Actual whiteboard image resolutions are 384 x 256, that's a 2:3 ratio for processing images outside of the application.
 
-Disclaimer: I have provided a compiled binary for your convenience but I do not expect you to trust it. You may download the source code and build the project in Visual Studio instead.
+Disclaimer: I have provided a compiled binary (in the Binaries folder) for your convenience but I do not expect you to trust it. You may download the source code and build the project in Visual Studio instead.
 
 Thanks to RJ#0514 for reminding me that this needed updating to support colour.
 
