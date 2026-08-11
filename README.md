@@ -2,8 +2,6 @@ A whiteboard editor for Approximately Up
 
 [Download](https://github.com/quakec/AU_Whiteboard_Editor/blob/9760639e52cc81c5d91e36966af36724ac1be817/Binaries/2.26.223.2053/AU_Whiteboard_Editor.exe)
 
-https://github.com/quakec/AU_Whiteboard_Editor/tree/9760639e52cc81c5d91e36966af36724ac1be817/Binaries/2.26.223.2053
-
 This tool allows you to open any image, format it and overwrite your whiteboards, it includes automatic ship enumeration, dithering and crop tools with the ability to filter the palette colours.
 
 How to use: Either order, pick your ships's whiteboard from the treeview/click Open Image. At this point you'll be able to click the overwrite button, there are various adjustment tools at your disposal, play around to see what's look best.
