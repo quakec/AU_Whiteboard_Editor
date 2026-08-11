@@ -825,7 +825,7 @@ namespace AU_Whiteboard_Editor.Helpers
                 throw new ArgumentNullException(nameof(source));
 
             if (palette == null || palette.Length == 0)
-                throw new ArgumentException("Palette cannot be null or empty.", nameof(palette));
+                return CreateArgbCopy(source);
 
             bool ownsInput = source.PixelFormat != PixelFormat.Format32bppArgb;
             Bitmap input = ownsInput ? CreateArgbCopy(source) : source;
@@ -890,7 +890,7 @@ namespace AU_Whiteboard_Editor.Helpers
                 throw new ArgumentNullException(nameof(source));
 
             if (palette == null || palette.Length == 0)
-                throw new ArgumentException("Palette cannot be null or empty.", nameof(palette));
+                return CreateArgbCopy(source);
 
             bool ownsInput = source.PixelFormat != PixelFormat.Format32bppArgb;
             Bitmap input = ownsInput ? CreateArgbCopy(source) : source;
